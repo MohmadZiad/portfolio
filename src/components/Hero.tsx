@@ -134,8 +134,8 @@ const Hero = () => {
           {/* === Social Media Icons === */}
           <div style={{ display: "flex", gap: "1.2rem", marginTop: "2rem" }}>
             {[
-              ["linkedin", "https://linkedin.com"],
-              ["github", "https://github.com"],
+              ["linkedin", "https://www.linkedin.com/in/mohmadali/"],
+              ["github", "https://github.com/MohmadZiad"],
               ["twitter", "https://twitter.com"],
               ["youtube", "https://youtube.com"],
             ].map(([platform, url]) => (
