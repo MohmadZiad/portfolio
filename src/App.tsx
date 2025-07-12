@@ -1,7 +1,7 @@
-// src/App.tsx
 import React from 'react';
 import Hero from './components/Hero'; 
 import Projects from "./components/Projects";
+import Services from './components/Services';
 
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <Hero /> 
       <Projects />
+      <Services />
     </div>
   );
 }
