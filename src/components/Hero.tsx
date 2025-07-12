@@ -1,181 +1,182 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import Tilt from "react-parallax-tilt";
+import { Typewriter } from "react-simple-typewriter";
+import { Howl } from "howler";
+// @ts-ignore
+import annyang from "annyang";
+import { useGesture } from "@use-gesture/react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./Hero.css";
+
+const clickSound = new Howl({ src: ["/click.mp3"] });
 
 const Hero = () => {
+  // Theme Toggle
+  const [darkMode, setDarkMode] = useState(false);
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+  }, [darkMode]);
+
+  // Voice Commands
+  useEffect(() => {
+    if (annyang) {
+      annyang.addCommands({
+        "scroll down": () => scrollToSection("projects"),
+        "toggle theme": () => setDarkMode((prev) => !prev),
+        "play sound": () => clickSound.play(),
+      });
+      annyang.start();
+    }
+  }, []);
+
+  // Time-based Greeting
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+  // Drag Gesture for image
+  const imgRef = useRef(null);
+  useGesture(
+    {
+      onDrag: ({ offset: [dx, dy] }) => {
+        if (imgRef.current) {
+          imgRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
+        }
+      },
+    },
+    { target: imgRef }
+  );
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Custom Cursor
+  const cursorRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      }
+    };
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#ffffff",
-        color: "#111827",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      {/* ===== HEADER ===== */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "1.5rem 8%",
-          borderBottom: "1px solid #e5e7eb",
-          position: "sticky",
-          top: 0,
-          background: "#ffffff",
-          zIndex: 100,
-        }}
+    <>
+      <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8 }}
+        className="hero-root"
       >
-        <div
-          style={{
-            fontSize: "2rem",
-            fontWeight: 900,
-            color: "#10b981",
-            letterSpacing: 1,
-          }}
-        >
-          MOHAMMAD
-        </div>
-        <nav style={{ display: "flex", gap: "2.5rem", fontWeight: 500 }}>
-          <a
-            href="#services"
-            style={{ color: "#111827", textDecoration: "none" }}
-          >
-            Services
-          </a>
-          <a
-            href="#projects"
-            style={{ color: "#111827", textDecoration: "none" }}
-          >
-            Projects
-          </a>
-          <a
-            href="#contact"
-            style={{ color: "#111827", textDecoration: "none" }}
-          >
-            Contact
-          </a>
-        </nav>
-      </header>
-
-      {/* ===== HERO SECTION ===== */}
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          alignItems: "center",
-          padding: "4rem 8%",
-          gap: "2rem",
-        }}
-      >
-        {/* === LEFT TEXT === */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <p style={{ color: "#6b7280", fontSize: "1.2rem" }}>
-            Hello, I'm Mohammad Ali
-          </p>
-          <h1
-            style={{
-              fontSize: "3.2rem",
-              fontWeight: 800,
-              margin: "1rem 0",
-              color: "#111827",
-              lineHeight: 1.2,
-            }}
-          >
-            Full-Stack Developer
-          </h1>
-          <p
-            style={{
-              color: "#374151",
-              fontSize: "1.1rem",
-              lineHeight: 1.7,
-              maxWidth: 520,
-            }}
-          >
-            I'm a web developer with 6 months of hands-on experience from MERAKI
-            Academy. Skilled in JavaScript (ES6+), React.js, Node.js, MongoDB,
-            and PostgreSQL.
-          </p>
-
-          <motion.button
-            onClick={() => {
-              const section = document.getElementById("projects");
-              section?.scrollIntoView({ behavior: "smooth" });
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            viewport={{ once: true }}
-            style={{
-              padding: "0.75rem 2rem",
-              background: "#10b981",
-              border: "none",
-              borderRadius: 10,
-              color: "#fff",
-              fontWeight: 600,
-              fontSize: "1.1rem",
-              marginTop: "2rem",
-              boxShadow: "0 4px 14px rgba(16, 185, 129, 0.3)",
-              cursor: "pointer",
-            }}
-          >
-            View my work
-          </motion.button>
-
-          {/* === Social Icons === */}
-          <motion.div
-            style={{ display: "flex", gap: "1.2rem", marginTop: "2rem" }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            {[
-              ["linkedin", "https://www.linkedin.com/in/mohmadali/"],
-              ["github", "https://github.com/MohmadZiad"],
-              ["twitter", "https://twitter.com"],
-              ["youtube", "https://youtube.com"],
-            ].map(([platform, url]) => (
-              <a
-                key={platform}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#111827", fontSize: "1.8rem" }}
-              >
-                <i className={`fab fa-${platform}`}></i>
+        <header>
+          <div className="logo" aria-label="Logo">
+            MOHAMMAD
+          </div>
+          <nav>
+            {["services", "projects", "contact"].map((id) => (
+              <a key={id} href={`#${id}`}>
+                {id[0].toUpperCase() + id.slice(1)}
               </a>
             ))}
-          </motion.div>
-        </motion.div>
+            <button
+              onClick={() => setDarkMode((prev) => !prev)}
+              className="theme-toggle"
+              aria-label="Toggle theme"
+            >
+              {darkMode ? "🌙" : "☀️"}
+            </button>
+          </nav>
+        </header>
 
-        {/* === RIGHT IMAGE === */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src="/photo.jpg"
-            alt="Mohammad Ali"
-            style={{ width: 360, height: "auto" }}
+        <section>
+          <motion.div
+            className="text-content"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <p className="greeting">{greeting}, I'm Mohammad Ali</p>
+            <h1 className="title">
+              <Typewriter
+                words={["Full-Stack Developer", "UI/UX Designer", "Freelancer"]}
+                loop
+                cursor
+                cursorStyle="|"
+                typeSpeed={80}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </h1>
+            <p className="subtitle">
+              I turn ideas into fast, scalable, and elegant web solutions.
+              MERAKI Academy graduate skilled in JavaScript, React.js, Node.js,
+              MongoDB, and PostgreSQL.
+            </p>
+            <motion.button
+              onClick={() => {
+                clickSound.play();
+                scrollToSection("projects");
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="cta"
+            >
+              View my work
+            </motion.button>
+            <div className="social-icons">
+              {["linkedin", "github", "twitter", "youtube"].map((platform) => (
+                <a
+                  key={platform}
+                  href={
+                    platform === "linkedin"
+                      ? "https://linkedin.com/in/mohmadali"
+                      : platform === "github"
+                      ? "https://github.com/MohmadZiad"
+                      : platform === "twitter"
+                      ? "https://twitter.com"
+                      : "https://youtube.com"
+                  }
+                  aria-label={platform}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <i className={`fab fa-${platform}`} />
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Animated background blob */}
+          <motion.div
+            className="blob"
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
           />
-        </motion.div>
-      </section>
-    </div>
+
+          <Tilt
+            glareEnable
+            glareMaxOpacity={0.2}
+            scale={1.02}
+            transitionSpeed={400}
+          >
+            <motion.img
+              ref={imgRef}
+              src="/photo.jpg"
+              alt="Photo of Mohammad Ali"
+              className="profile-img"
+              whileHover={{ scale: 1.02 }}
+              draggable={false}
+            />
+          </Tilt>
+        </section>
+      </motion.div>
+    </>
   );
 };
 

@@ -7,14 +7,9 @@ import {
   FaTools,
   FaProjectDiagram,
 } from "react-icons/fa";
+import "./Services.css";
 
-interface Service {
-  title: string;
-  icon: JSX.Element;
-  description: string;
-}
-
-const services: Service[] = [
+const services = [
   {
     title: "Frontend Development",
     icon: <FaCode />,
@@ -61,79 +56,14 @@ const services: Service[] = [
 
 const Services: React.FC = () => {
   return (
-    <section
-      id="services"
-      style={{
-        padding: "5rem 8%",
-        background: "#f3f4f6",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "2.6rem",
-          fontWeight: 800,
-          textAlign: "center",
-          marginBottom: "3.5rem",
-          color: "#111827",
-        }}
-      >
-        🛠️ My Services
-      </h2>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "2rem",
-        }}
-      >
+    <section id="services" className="services-section">
+      <h2 className="services-title">🛠️ My Services</h2>
+      <div className="services-grid">
         {services.map((service, index) => (
-          <div
-            key={index}
-            style={{
-              background: "#ffffff",
-              padding: "2rem",
-              borderRadius: "1.25rem",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.06)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-5px)";
-              e.currentTarget.style.boxShadow =
-                "0 8px 20px rgba(0, 0, 0, 0.12)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow =
-                "0 4px 16px rgba(0, 0, 0, 0.06)";
-            }}
-          >
-            <div
-              style={{
-                fontSize: "2.2rem",
-                color: "#10b981",
-                marginBottom: "1rem",
-              }}
-            >
-              {service.icon}
-            </div>
-            <h3
-              style={{
-                fontSize: "1.4rem",
-                fontWeight: 700,
-                marginBottom: "0.75rem",
-                color: "#111827",
-              }}
-            >
-              {service.title}
-            </h3>
-            <p style={{ color: "#4b5563", lineHeight: 1.6 }}>
-              {service.description}
-            </p>
+          <div key={index} className="service-card">
+            <div className="service-icon">{service.icon}</div>
+            <h3 className="service-heading">{service.title}</h3>
+            <p className="service-description">{service.description}</p>
           </div>
         ))}
       </div>
