@@ -1,188 +1,217 @@
 /* ===== Root Container ===== */
 .hero-root {
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #f8fafc, #ffffff);
-    color: #0f172a;
-    font-family: "Inter", sans-serif;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* ===== Header ===== */
-  .hero-header,
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 8%;
-    border-bottom: 1px solid #e2e8f0;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .logo {
-    font-size: 2rem;
-    font-weight: 900;
-    color: #00a57d;
-    letter-spacing: 1px;
-  }
-  
-  header nav {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  header nav a {
-    text-decoration: none;
-    color: #0f172a;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-  
-  header nav a:hover {
-    color: #00a57d;
-  }
-  
-  .theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  /* ===== Hero Content ===== */
-  .hero-content,
-  section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4rem 8%;
-    min-height: calc(100vh - 90px);
-    gap: 2rem;
-  }
-  
-  /* ===== Text Area ===== */
-  .hero-text,
-  .text-content {
-    max-width: 55%;
-  }
-  
-  .greeting {
-    color: #64748b;
-    font-size: 1.3rem;
-  }
-  
-  .title {
-    font-size: 3.8rem;
-    font-weight: 900;
-    line-height: 1.2;
-    margin: 1.2rem 0;
-  }
-  
-  .subtitle {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #475569;
-    max-width: 550px;
-  }
-  
-  /* ===== Button & Socials ===== */
-  .cta,
-  .hero-button {
-    padding: 1rem 2.5rem;
-    background: #00a57d;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 1rem;
-    border: none;
-    margin-top: 2rem;
-    cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0, 165, 125, 0.3);
-    transition: background 0.3s ease;
-  }
-  
-  .cta:hover {
-    background: #089981;
-  }
-  
-  .hero-socials,
-  .social-icons {
-    display: flex;
-    gap: 1.2rem;
-    margin-top: 2rem;
-    font-size: 1.8rem;
-  }
-  
-  .social-icons a {
-    color: #0f172a;
-    transition: color 0.3s ease;
-  }
-  
-  .social-icons a:hover {
-    color: #00a57d;
-  }
-  
-  /* ===== Image & Blob ===== */
-  .profile-img {
-    width: 370px;
-    height: auto;
-    border-radius: 1.2rem;
-    z-index: 2;
-    position: relative;
-    object-fit: cover;
-  }
-  
-  .blob,
-  .hero-blob {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #c2fbd7 0%, transparent 70%);
-    filter: blur(60px);
-    z-index: 0;
-    top: 30px;
-    left: 0;
-  }
-  
-  /* ===== Custom Cursor ===== */
-  .custom-cursor {
-    position: fixed;
-    width: 14px;
-    height: 14px;
-    background-color: #00a57d;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate3d(0, 0, 0);
-    transition: transform 0.1s ease-out;
-  }
-  
-  /* ===== Dark Mode ===== */
-  body.dark-mode {
-    background: #0f172a;
-    color: #f1f5f9;
-  }
-  
-  body.dark-mode .hero-root {
-    background: #0f172a;
-  }
-  
-  body.dark-mode header nav a {
-    color: #f1f5f9;
-  }
-  
-  body.dark-mode .cta {
-    background: #089981;
-  }
-  
-  body.dark-mode .social-icons a {
-    color: #f1f5f9;
-  }
-  
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f8fafc, #ffffff);
+  color: #0f172a;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+/* ===== Header ===== */
+.hero-header,
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 8%;
+  border-bottom: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #00a57d;
+  letter-spacing: 1px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #00a57d;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ===== Hero Content ===== */
+.hero-content,
+section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 8%;
+  min-height: calc(100vh - 90px);
+  gap: 2rem;
+}
+
+/* ===== Text Area ===== */
+.hero-text,
+.text-content {
+  max-width: 55%;
+}
+
+.greeting {
+  color: #64748b;
+  font-size: 1.3rem;
+}
+
+.title {
+  font-size: 3.8rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 1.2rem 0;
+  color: #0f172a;
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #475569;
+  max-width: 550px;
+}
+
+/* ===== Button & Socials ===== */
+.cta,
+.hero-button {
+  padding: 1rem 2.5rem;
+  background: #00a57d;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 1rem;
+  border: none;
+  margin-top: 2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 165, 125, 0.3);
+  transition: background 0.3s ease;
+}
+
+.cta:hover {
+  background: #089981;
+}
+
+.hero-socials,
+.social-icons {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+.social-icons a {
+  color: #0f172a;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #00a57d;
+}
+
+/* ===== Image & Blob ===== */
+.profile-img {
+  width: 370px;
+  height: auto;
+  border-radius: 1.2rem;
+  z-index: 2;
+  position: relative;
+  object-fit: cover;
+}
+
+.blob,
+.hero-blob {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #c2fbd7 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 0;
+  top: 30px;
+  left: 0;
+}
+
+/* ===== Custom Cursor ===== */
+.custom-cursor {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  background-color: #00a57d;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.1s ease-out;
+}
+
+/* ===== Dark Mode ===== */
+body.dark-mode {
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+body.dark-mode .hero-root {
+  background: #0f172a;
+}
+
+body.dark-mode header {
+  background: rgba(30, 41, 59, 0.7);
+  border-bottom: 1px solid #1e293b;
+}
+
+body.dark-mode .logo {
+  color: #22d3ee;
+}
+
+body.dark-mode header nav a {
+  color: #f1f5f9;
+}
+
+body.dark-mode header nav a:hover {
+  color: #38bdf8;
+}
+
+body.dark-mode .cta {
+  background: #089981;
+}
+
+body.dark-mode .cta:hover {
+  background: #06b6d4;
+}
+
+body.dark-mode .social-icons a {
+  color: #f1f5f9;
+}
+
+body.dark-mode .greeting {
+  color: #94a3b8;
+}
+
+body.dark-mode .title {
+  color: #f8fafc;
+}
+
+body.dark-mode .subtitle {
+  color: #cbd5e1;
+}

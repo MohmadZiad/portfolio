@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaCode,
   FaDatabase,
@@ -13,59 +13,122 @@ const services = [
   {
     title: "Frontend Development",
     icon: <FaCode />,
-    description:
-      "Building responsive UIs with React.js, Next.js, TypeScript, React Slick, and UI libraries like MUI and Joy UI. Focused on accessibility, performance, and smooth animations.",
+    bullets: [
+      "Built with React.js, TypeScript, MUI",
+      "Accessibility-first approach",
+      "Pixel-perfect UI animations",
+    ],
+    tag: "Frontend",
   },
   {
     title: "Backend Development",
     icon: <FaServer />,
-    description:
-      "Developing scalable backend systems using Node.js and Express.js. Includes secure authentication (JWT, OAuth), REST APIs, role-based access, and session management.",
+    bullets: [
+      "Node.js & Express.js APIs",
+      "JWT & OAuth authentication",
+      "Role-based access control",
+    ],
+    tag: "Backend",
   },
   {
     title: "Database Architecture",
     icon: <FaDatabase />,
-    description:
-      "Designing efficient schemas and managing data with PostgreSQL, NeonDB, and MongoDB. Experienced with both relational and NoSQL systems using Mongoose & SQL clients.",
+    bullets: [
+      "Schemas with PostgreSQL, NeonDB",
+      "MongoDB & Mongoose",
+      "SQL & NoSQL optimized",
+    ],
+    tag: "Backend",
   },
   {
     title: "Real-Time Functionality",
     icon: <FaProjectDiagram />,
-    description:
-      "Implementing chat systems, instant notifications, and dynamic dashboards using Socket.IO and WebSockets for seamless real-time experiences.",
+    bullets: [
+      "Chat & notifications with Socket.IO",
+      "Live dashboards",
+      "WebSocket integration",
+    ],
+    tag: "Tools",
   },
   {
     title: "Authentication Systems",
     icon: <FaTools />,
-    description:
-      "Implementing secure sign-in flows using JWT, Google Login, Apple OAuth, and role-based access control across multiple user types.",
+    bullets: [
+      "Google, JWT, Apple OAuth",
+      "Multi-role user flows",
+      "Secure access layers",
+    ],
+    tag: "Tools",
   },
   {
     title: "Responsive Design & UI/UX",
     icon: <FaMobileAlt />,
-    description:
-      "Crafting mobile-first, pixel-perfect layouts with grid systems and component libraries. Focused on usability, accessibility, and clean design.",
+    bullets: [
+      "Mobile-first grids",
+      "Component-driven layout",
+      "Accessibility & usability focused",
+    ],
+    tag: "UI/UX",
   },
   {
     title: "Dev Tools & Workflow",
     icon: <FaTools />,
-    description:
-      "Fluent with Git, GitHub, Postman, Trello, Draw.io, and MongoDB Compass. Experienced in team-based collaboration and agile development.",
+    bullets: [
+      "Git, GitHub, Trello",
+      "MongoDB Compass, Postman",
+      "Agile & team-based tools",
+    ],
+    tag: "Tools",
   },
 ];
 
 const Services: React.FC = () => {
+  const [filter, setFilter] = useState("All");
+
+  const filteredServices =
+    filter === "All" ? services : services.filter((s) => s.tag === filter);
+
   return (
     <section id="services" className="services-section">
-      <h2 className="services-title">🛠️ My Services</h2>
-      <div className="services-grid">
-        {services.map((service, index) => (
-          <div key={index} className="service-card">
-            <div className="service-icon">{service.icon}</div>
-            <h3 className="service-heading">{service.title}</h3>
-            <p className="service-description">{service.description}</p>
+      <div className="services-content">
+        <div className="services-header">
+          <h2 className="services-title">Development Services Built for the Modern Web</h2>
+          <div className="filter-tabs">
+            {["All", "Frontend", "Backend", "UI/UX", "Tools"].map(
+              (category) => (
+                <button
+                  key={category}
+                  onClick={() => setFilter(category)}
+                  className={filter === category ? "active" : ""}
+                >
+                  {category}
+                </button>
+              )
+            )}
           </div>
-        ))}
+        </div>
+
+        <div className="services-grid">
+          {filteredServices.map((service, index) => (
+            <div
+              key={index}
+              className="service-card"
+              style={{ animationDelay: `${index * 0.15}s` }}
+            >
+              <span className="tag-badge">{service.tag}</span>
+              <div className="service-icon-container">
+                <div className="service-icon animated-icon">{service.icon}</div>
+              </div>
+              <h3 className="service-heading">{service.title}</h3>
+              <ul className="service-bullets">
+                {service.bullets.map((point, i) => (
+                  <li key={i}>✅ {point}</li>
+                ))}
+              </ul>
+              <button className="usecase-button">See Real Use Case →</button>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
