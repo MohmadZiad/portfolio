@@ -1,211 +1,191 @@
-import React from "react";
-import {
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaLinkedin,
-  FaGithub,
-} from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { MapPin, Mail, Linkedin, Github, Copy, Send } from "lucide-react";
 import emailjs from "emailjs-com";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Contact.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Contact: React.FC = () => {
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [copiedField, setCopiedField] = useState("");
+
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("from_name") as HTMLInputElement)
+      ?.value;
+    const email = (form.elements.namedItem("from_email") as HTMLInputElement)
+      ?.value;
 
-    emailjs
-      .sendForm(
-        "service_hv48jma", // Service ID
-        "template_8l8iuih", // Template ID
-        e.currentTarget,
-        "sDnkJ3fgWqDFoReP4" // Public Key (من EmailJS > Account > Public Key)
-      )
-      .then(
-        () => toast.success("✅ Message sent successfully!"),
-        () => toast.error("❌ Failed to send message. Please try again.")
+    let valid = true;
+
+    if (!name.trim()) {
+      setNameError("Name is required");
+      toast.error("Name is required.");
+      valid = false;
+    } else {
+      setNameError("");
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setEmailError("Invalid email");
+      toast.error("Invalid email address.");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    if (!valid) return;
+
+    setLoading(true);
+    try {
+      const result = await emailjs.sendForm(
+        "service_hv48jma",
+        "template_8l8iuih",
+        form,
+        "sDnkJ3fgWqDFoReP4"
       );
+      if (result.status === 200) {
+        toast.success("✅ Message sent!");
+        form.reset();
+        setNameError("");
+        setEmailError("");
+      } else {
+        toast.error("❌ Failed to send message.");
+      }
+    } catch {
+      toast.error("❌ Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    e.currentTarget.reset();
+  const handleCopy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast.info("Copied to clipboard");
+    setCopiedField(label);
+    setTimeout(() => setCopiedField(""), 1500);
   };
 
   return (
-    <section
-      id="contact"
-      style={{
-        padding: "5rem 8%",
-        background: "#f9fafb",
-        color: "#111827",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      <ToastContainer />
-      <h2
-        style={{
-          fontSize: "2.8rem",
-          fontWeight: 800,
-          textAlign: "center",
-          marginBottom: "2rem",
-        }}
-      >
-        📬 Let's Connect
-      </h2>
-      <p
-        style={{
-          textAlign: "center",
-          color: "#6b7280",
-          fontSize: "1.1rem",
-          maxWidth: 700,
-          margin: "0 auto 3.5rem",
-          lineHeight: 1.7,
-        }}
-      >
-        Got a question, proposal, or just want to say hello?
-        <br />
-        I’m always open to new ideas and collaboration opportunities.
-      </p>
+    <section id="contact" className="contactBG">
+      <ToastContainer position="top-center" autoClose={3000} limit={1} />
+      <div className="contactContent">
+        <div className="contactText" data-aos="fade-right">
+          <h2 className="contactTitle">📬 Let’s Connect</h2>
+          <p className="contactDescription">
+            Whether you have a project in mind or just want to say hello — I’d
+            love to hear from you.
+            <br />
+            Let’s build something amazing together.
+          </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "3rem",
-          maxWidth: "1000px",
-          margin: "0 auto",
-        }}
-      >
-        <form
-          onSubmit={sendEmail}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.2rem",
-            background: "#fff",
-            padding: "2rem",
-            borderRadius: "1rem",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-          }}
-        >
-          <input
-            name="from_name"
-            type="text"
-            placeholder="Your Name"
-            required
-            style={inputStyle}
-          />
+          <div className="contactInfoGrid">
+            {[
+              { Icon: MapPin, label: "Location", value: "Amman, Jordan" },
+              {
+                Icon: Mail,
+                label: "Email",
+                value: "mohmmadziad.ali@gmail.com",
+                link: "mailto:mohmmadziad.ali@gmail.com",
+              },
+              {
+                Icon: Linkedin,
+                label: "LinkedIn",
+                value: "linkedin.com/in/mohmadali",
+                link: "https://www.linkedin.com/in/mohmadali",
+              },
+              {
+                Icon: Github,
+                label: "GitHub",
+                value: "github.com/MohmadZiad",
+                link: "https://github.com/MohmadZiad",
+              },
+            ].map(({ Icon, label, value, link }) => (
+              <div className="infoItem" key={label}>
+                <Icon className="infoIcon" size={20} />
+                <div className="infoContent">
+                  <p className="infoLabel">{label}</p>
+                  {link ? (
+                    <a
+                      href={link}
+                      className="infoLink"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {value}
+                    </a>
+                  ) : (
+                    <p className="infoText">{value}</p>
+                  )}
+                </div>
+                <Copy
+                  size={16}
+                  className={`copyIcon ${
+                    copiedField === label ? "active" : ""
+                  }`}
+                  onClick={() => handleCopy(value, label)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
-          <input
-            name="from_email"
-            type="email"
-            placeholder="Your Email"
-            required
-            style={inputStyle}
-          />
+        <form onSubmit={sendEmail} className="contactForm" data-aos="fade-left">
+          <div className="formGroup">
+            <input
+              name="from_name"
+              type="text"
+              placeholder="Your Name"
+              className={`inputField ${nameError ? "invalid" : ""}`}
+              required
+            />
+            {nameError && <span className="errorText">{nameError}</span>}
+          </div>
 
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            rows={5}
-            required
-            style={{ ...inputStyle, resize: "vertical" }}
-          />
+          <div className="formGroup">
+            <input
+              name="from_email"
+              type="email"
+              placeholder="Your Email"
+              className={`inputField ${emailError ? "invalid" : ""}`}
+              required
+            />
+            {emailError && <span className="errorText">{emailError}</span>}
+          </div>
 
-          <button
-            type="submit"
-            style={{
-              background: "#10b981",
-              color: "#fff",
-              padding: "0.9rem 2rem",
-              borderRadius: 10,
-              border: "none",
-              fontWeight: 600,
-              fontSize: "1rem",
-              cursor: "pointer",
-              transition: "background 0.3s ease",
-            }}
-          >
-            Send Message
+          <div className="formGroup">
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              rows={5}
+              className="inputField"
+              required
+            />
+          </div>
+
+          <button type="submit" className="submitBtn" disabled={loading}>
+            {loading ? (
+              <div className="spinner" />
+            ) : (
+              <>
+                <Send size={18} style={{ marginRight: 8 }} />
+                Send Message
+              </>
+            )}
           </button>
         </form>
-
-        {/* === CONTACT INFO === */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.8rem",
-            justifyContent: "center",
-          }}
-        >
-          <ContactInfo
-            icon={<FaMapMarkerAlt color="#10b981" />}
-            title="Location"
-            value="Amman, Jordan"
-          />
-          <ContactInfo
-            icon={<FaEnvelope color="#10b981" />}
-            title="Email"
-            value="mohmmadziad.ali@gmail.com"
-            link="mailto:mohmmadziad.ali@gmail.com"
-          />
-          <ContactInfo
-            icon={<FaLinkedin color="#10b981" />}
-            title="LinkedIn"
-            value="linkedin.com/in/mohmadali"
-            link="https://www.linkedin.com/in/mohmadali"
-          />
-          <ContactInfo
-            icon={<FaGithub color="#10b981" />}
-            title="GitHub"
-            value="github.com/MohmadZiad"
-            link="https://github.com/MohmadZiad"
-          />
-        </div>
       </div>
     </section>
-  );
-};
-
-const inputStyle: React.CSSProperties = {
-  padding: "0.9rem 1.2rem",
-  borderRadius: 10,
-  border: "1px solid #d1d5db",
-  fontSize: "1rem",
-  outline: "none",
-};
-
-const ContactInfo: React.FC<{
-  icon: React.ReactNode;
-  title: string;
-  value: string;
-  link?: string;
-}> = ({ icon, title, value, link }) => {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-      <div style={{ fontSize: "1.5rem" }}>{icon}</div>
-      <div>
-        <p style={{ margin: 0, fontWeight: 600, fontSize: "0.95rem" }}>
-          {title}
-        </p>
-        {link ? (
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "#374151",
-              fontSize: "0.95rem",
-              textDecoration: "none",
-            }}
-          >
-            {value}
-          </a>
-        ) : (
-          <p style={{ margin: 0, color: "#374151", fontSize: "0.95rem" }}>
-            {value}
-          </p>
-        )}
-      </div>
-    </div>
   );
 };
 

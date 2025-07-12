@@ -1,5 +1,4 @@
 import React from "react";
-import "./Projects.css";
 import {
   FaGamepad,
   FaCode,
@@ -8,6 +7,8 @@ import {
   FaShoppingCart,
   FaSeedling,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
+import "./Projects.css";
 
 interface Project {
   title: string;
@@ -59,87 +60,99 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   return (
     <section className="project-showcase" id="projects">
-      <h2 className="projects-title" data-aos="fade-up">
+      <h2 className="projects-title">
         <FaShoppingCart style={{ marginRight: "10px", color: "#10b981" }} />
-        My Projects
+        Selected Projects That Deliver Value
       </h2>
 
-      {projects.map((project, index) => (
-        <div
-          className={`project-row ${index % 2 !== 0 ? "reverse" : ""}`}
-          key={index}
-          data-aos="fade-up"
-          data-aos-delay={index * 150}
-        >
-          <div className="project-image">
-            <img src={project.image} alt={project.title} loading="lazy" />
-          </div>
+      {projects.map((project, index) => {
+        const isAvocado = project.title.startsWith("Avocado");
 
-          <div className="project-details">
-            <h3>
-              {project.title.startsWith("Avocado") ? (
-                <FaSeedling style={{ marginRight: "10px", color: "#65a30d" }} />
-              ) : (
-                <FaShoppingCart
-                  style={{ marginRight: "10px", color: "#f97316" }}
-                />
-              )}
-              {project.title}
-            </h3>
-
-            <span
-              className={`project-role ${
-                project.role === "Individual" ? "individual" : "team"
-              }`}
-            >
-              {project.role === "Individual" ? (
-                <>
-                  <FaUser style={{ marginRight: "6px" }} />
-                  Individual Project
-                </>
-              ) : (
-                <>
-                  <FaUsers style={{ marginRight: "6px" }} />
-                  Team Project
-                </>
-              )}
-            </span>
-
-            <p>{project.description}</p>
-
-            <div className="tech-stack">
-              <p>
-                <strong>Frontend:</strong> {project.tech.frontend.join(", ")}
-              </p>
-              <p>
-                <strong>Backend:</strong> {project.tech.backend.join(", ")}
-              </p>
-              <p>
-                <strong>Tools:</strong> {project.tech.tools.join(", ")}
-              </p>
+        return (
+          <motion.div
+            className={`project-row glassy ${
+              isAvocado ? "avocado" : "mzstore"
+            } ${project.role === "Team" ? "team" : ""} ${
+              index % 2 !== 0 ? "reverse" : ""
+            }`}
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+          >
+            <div className="project-image">
+              <img src={project.image} alt={project.title} loading="lazy" />
             </div>
 
-            <div className="project-links">
-              <a
-                href={project.demoLink}
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="project-details">
+              <h3>
+                {isAvocado ? (
+                  <FaSeedling
+                    style={{ marginRight: "10px", color: "#65a30d" }}
+                  />
+                ) : (
+                  <FaShoppingCart
+                    style={{ marginRight: "10px", color: "#f97316" }}
+                  />
+                )}
+                {project.title}
+              </h3>
+
+              <span
+                className={`project-role ${
+                  project.role === "Individual" ? "individual" : "team"
+                }`}
               >
-                <FaGamepad style={{ marginRight: "8px" }} />
-                Live Demo
-              </a>
-              <a
-                href={project.codeLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaCode style={{ marginRight: "8px" }} />
-                Code
-              </a>
+                {project.role === "Individual" ? (
+                  <>
+                    <FaUser style={{ marginRight: "6px" }} />
+                    Individual Project
+                  </>
+                ) : (
+                  <>
+                    <FaUsers style={{ marginRight: "6px" }} />
+                    Team Project
+                  </>
+                )}
+              </span>
+
+              <p>{project.description}</p>
+
+              <div className="tech-stack">
+                <p>
+                  <strong>Frontend:</strong> {project.tech.frontend.join(", ")}
+                </p>
+                <p>
+                  <strong>Backend:</strong> {project.tech.backend.join(", ")}
+                </p>
+                <p>
+                  <strong>Tools:</strong> {project.tech.tools.join(", ")}
+                </p>
+              </div>
+
+              <div className="project-links">
+                <a
+                  href={project.demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGamepad style={{ marginRight: "8px" }} />
+                  Live Demo
+                </a>
+                <a
+                  href={project.codeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaCode style={{ marginRight: "8px" }} />
+                  Code
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </motion.div>
+        );
+      })}
     </section>
   );
 };
