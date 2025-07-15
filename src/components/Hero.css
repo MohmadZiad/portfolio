@@ -1,24 +1,47 @@
-/* ===== Root Container ===== */
+/* ===== Base Reset ===== */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+}
+
+/* ===== Particles Fix ===== */
+#tsparticles,
+#tsparticles > canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ===== Hero Root ===== */
 .hero-root {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #f8fafc, #ffffff);
   color: #0f172a;
-  font-family: "Inter", sans-serif;
   overflow: hidden;
-  padding: 0;
-  margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== Header ===== */
-.hero-header,
-header {
+.hero-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 8%;
-  border-bottom: 1px solid #e2e8f0;
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e2e8f0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -27,25 +50,26 @@ header {
 .logo {
   font-size: 2rem;
   font-weight: 900;
-  color: #00a57d;
-  letter-spacing: 1px;
+  background: linear-gradient(to right, #10b981, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-header nav {
+.hero-header nav {
   display: flex;
-  align-items: center;
   gap: 2rem;
+  align-items: center;
 }
 
-header nav a {
-  text-decoration: none;
+.hero-header nav a {
   color: #0f172a;
+  text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
 }
 
-header nav a:hover {
-  color: #00a57d;
+.hero-header nav a:hover {
+  color: #10b981;
 }
 
 .theme-toggle {
@@ -56,29 +80,31 @@ header nav a:hover {
 }
 
 /* ===== Hero Content ===== */
-.hero-content,
-section {
+.hero-content {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 4rem 8%;
   min-height: calc(100vh - 90px);
-  gap: 2rem;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
-/* ===== Text Area ===== */
-.hero-text,
-.text-content {
-  max-width: 55%;
+/* ===== Text Side ===== */
+.hero-text {
+  flex: 1 1 400px;
+  max-width: 600px;
 }
 
 .greeting {
   color: #64748b;
   font-size: 1.3rem;
+  margin: 0;
 }
 
 .title {
-  font-size: 3.8rem;
+  font-size: 3.2rem;
   font-weight: 900;
   line-height: 1.2;
   margin: 1.2rem 0;
@@ -89,30 +115,30 @@ section {
   font-size: 1.15rem;
   line-height: 1.8;
   color: #475569;
-  max-width: 550px;
+  margin-bottom: 1.5rem;
 }
 
-/* ===== Button & Socials ===== */
-.cta,
-.hero-button {
+/* ===== CTA Button ===== */
+.cta {
   padding: 1rem 2.5rem;
-  background: #00a57d;
+  background: linear-gradient(135deg, #10b981, #0ea5e9);
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 1rem;
   border: none;
-  margin-top: 2rem;
   cursor: pointer;
-  box-shadow: 0 8px 30px rgba(0, 165, 125, 0.3);
-  transition: background 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 165, 125, 0.4);
+  transition: all 0.3s ease;
 }
 
 .cta:hover {
-  background: #089981;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
 }
 
-.hero-socials,
+/* ===== Social Icons ===== */
 .social-icons {
   display: flex;
   gap: 1.2rem;
@@ -122,34 +148,110 @@ section {
 
 .social-icons a {
   color: #0f172a;
-  transition: color 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .social-icons a:hover {
-  color: #00a57d;
+  color: #10b981;
+  transform: scale(1.2);
 }
 
-/* ===== Image & Blob ===== */
+/* ===== Skills Marquee ===== */
+.skills-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 0.5rem 0;
+  animation: scrollSkills 20s linear infinite;
+}
+
+.skills-marquee span {
+  display: inline-block;
+  margin-right: 2.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #10b981;
+  letter-spacing: 0.5px;
+}
+
+@keyframes scrollSkills {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* ===== Image Wrapper ===== */
+.hero-img-wrapper {
+  flex: 1 1 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  align-self: center;
+  padding-top: 1.5rem;
+}
+
+/* ===== Image ===== */
 .profile-img {
-  width: 370px;
+  width: 300px;
+  max-width: 100%;
   height: auto;
-  border-radius: 1.2rem;
+  border-radius: 1.5rem;
   z-index: 2;
   position: relative;
   object-fit: cover;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08),
+    0 0 120px rgba(16, 185, 129, 0.65), 0 0 80px rgba(14, 165, 233, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.blob,
+.profile-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 16px 40px rgba(16, 185, 129, 0.55),
+    0 0 150px rgba(14, 165, 233, 0.5);
+}
+
+/* ===== Tooltip on Hover ===== */
+.hero-img-wrapper::after {
+  content: "Hi there 👋";
+  position: absolute;
+  top: -35px;
+  background: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.hero-img-wrapper:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Blob Animation ===== */
 .hero-blob {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle at center, #c2fbd7 0%, transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(circle at center, #a7f3d0 0%, transparent 80%);
+  filter: blur(90px);
   z-index: 0;
-  top: 30px;
-  left: 0;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 /* ===== Custom Cursor ===== */
@@ -157,7 +259,7 @@ section {
   position: fixed;
   width: 14px;
   height: 14px;
-  background-color: #00a57d;
+  background-color: #10b981;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -175,20 +277,21 @@ body.dark-mode .hero-root {
   background: #0f172a;
 }
 
-body.dark-mode header {
+body.dark-mode .hero-header {
   background: rgba(30, 41, 59, 0.7);
   border-bottom: 1px solid #1e293b;
 }
 
 body.dark-mode .logo {
-  color: #22d3ee;
+  background: none;
+  -webkit-text-fill-color: #22d3ee;
 }
 
-body.dark-mode header nav a {
+body.dark-mode .hero-header nav a {
   color: #f1f5f9;
 }
 
-body.dark-mode header nav a:hover {
+body.dark-mode .hero-header nav a:hover {
   color: #38bdf8;
 }
 

@@ -6,19 +6,43 @@ import { Howl } from "howler";
 // @ts-ignore
 import annyang from "annyang";
 import { useGesture } from "@use-gesture/react";
+import Particles from "react-tsparticles";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Hero.css";
 
+// ====== Sounds ======
 const clickSound = new Howl({ src: ["/click.mp3"] });
 
 const Hero = () => {
-  // Theme Toggle
   const [darkMode, setDarkMode] = useState(false);
+  const [greeting, setGreeting] = useState("");
+
+  // ====== Greeting Based on Time and Location ======
+  useEffect(() => {
+    const hour = new Date().getHours();
+    const baseGreeting =
+      hour < 12
+        ? "Good morning"
+        : hour < 18
+        ? "Good afternoon"
+        : "Good evening";
+
+    fetch("https://ipapi.co/json/")
+      .then((res) => res.json())
+      .then((data) => {
+        setGreeting(
+          `${baseGreeting}, I'm Mohammad Ali from ${data.country_name}`
+        );
+      });
+  }, []);
+
+  // ====== Apply Dark Mode ======
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
   }, [darkMode]);
 
-  // Voice Commands
+  // ====== Voice Commands ======
   useEffect(() => {
     if (annyang) {
       annyang.addCommands({
@@ -30,13 +54,13 @@ const Hero = () => {
     }
   }, []);
 
-  // Time-based Greeting
-  const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  // ====== Scroll Helper ======
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  // Drag Gesture for image
-  const imgRef = useRef(null);
+  // ====== Image Drag ======
+  const imgRef = useRef<HTMLImageElement>(null);
   useGesture(
     {
       onDrag: ({ offset: [dx, dy] }) => {
@@ -48,11 +72,7 @@ const Hero = () => {
     { target: imgRef }
   );
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  // Custom Cursor
+  // ====== Custom Cursor Movement ======
   const cursorRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -66,18 +86,36 @@ const Hero = () => {
 
   return (
     <>
+      {/* ==== Particles Background ==== */}
+      <Particles
+        id="tsparticles"
+        options={{
+          background: { color: { value: "transparent" } },
+          fpsLimit: 60,
+          particles: {
+            number: { value: 60 },
+            size: { value: 2 },
+            move: { enable: true, speed: 1 },
+            opacity: { value: 0.3 },
+            links: { enable: true, opacity: 0.1, distance: 150 },
+          },
+          detectRetina: true,
+        }}
+      />
+
+      {/* ==== Custom Cursor ==== */}
       <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />
+
+      {/* ==== Hero Section ==== */}
       <motion.div
+        className="hero-root"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{ duration: 0.8 }}
-        className="hero-root"
       >
-        <header>
-          <div className="logo" aria-label="Logo">
-            MOHAMMAD
-          </div>
+        {/* ==== Header ==== */}
+        <header className="hero-header">
+          <div className="logo">MOHAMMAD</div>
           <nav>
             {["services", "projects", "contact"].map((id) => (
               <a key={id} href={`#${id}`}>
@@ -94,22 +132,24 @@ const Hero = () => {
           </nav>
         </header>
 
-        <section>
+        {/* ==== Hero Content ==== */}
+        <section className="hero-content">
+          {/* ==== Text Side ==== */}
           <motion.div
-            className="text-content"
+            className="hero-text"
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
+            transition={{ duration: 1 }}
           >
-            <p className="greeting">{greeting}, I'm Mohammad Ali</p>
+            <p className="greeting">{greeting}</p>
             <h1 className="title">
               <Typewriter
                 words={["Full-Stack Developer", "UI/UX Designer", "Freelancer"]}
                 loop
                 cursor
                 cursorStyle="|"
-                typeSpeed={80}
-                deleteSpeed={50}
+                typeSpeed={90}
+                deleteSpeed={60}
                 delaySpeed={1500}
               />
             </h1>
@@ -118,6 +158,7 @@ const Hero = () => {
               MERAKI Academy graduate skilled in JavaScript, React.js, Node.js,
               MongoDB, and PostgreSQL.
             </p>
+
             <motion.button
               onClick={() => {
                 clickSound.play();
@@ -129,51 +170,70 @@ const Hero = () => {
             >
               View my work
             </motion.button>
+
+            {/* ==== Social Icons ==== */}
             <div className="social-icons">
-              {["linkedin", "github", "twitter", "youtube"].map((platform) => (
-                <a
-                  key={platform}
-                  href={
-                    platform === "linkedin"
-                      ? "https://linkedin.com/in/mohmadali"
-                      : platform === "github"
-                      ? "https://github.com/MohmadZiad"
-                      : platform === "twitter"
-                      ? "https://twitter.com"
-                      : "https://youtube.com"
-                  }
-                  aria-label={platform}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <i className={`fab fa-${platform}`} />
-                </a>
-              ))}
+              <a
+                href="https://www.linkedin.com/in/mohmadali/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <i className="fab fa-linkedin" />
+              </a>
+              <a
+                href="https://github.com/MohmadZiad"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <i className="fab fa-github" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
+                <i className="fab fa-twitter" />
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+              >
+                <i className="fab fa-youtube" />
+              </a>
+            </div>
+
+            {/* ==== Skills Marquee ==== */}
+            <div className="skills-marquee">
+              <span>React.js</span>
+              <span>Next.js</span>
+              <span>TypeScript</span>
+              <span>PostgreSQL</span>
+              <span>MongoDB</span>
+              <span>Node.js</span>
+              <span>Framer Motion</span>
             </div>
           </motion.div>
 
-          {/* Animated background blob */}
-          <motion.div
-            className="blob"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-          />
-
-          <Tilt
-            glareEnable
-            glareMaxOpacity={0.2}
-            scale={1.02}
-            transitionSpeed={400}
-          >
-            <motion.img
-              ref={imgRef}
-              src="/photo.jpg"
-              alt="Photo of Mohammad Ali"
-              className="profile-img"
-              whileHover={{ scale: 1.02 }}
-              draggable={false}
-            />
-          </Tilt>
+          {/* ==== Image Side ==== */}
+          <div className="hero-img-wrapper">
+            <Tilt glareEnable glareMaxOpacity={0.2} scale={1.02}>
+              <motion.img
+                ref={imgRef}
+                src="/photo-transparent.png"
+                alt="Mohammad Ali"
+                className="profile-img"
+                draggable={false}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 1 }}
+              />
+            </Tilt>
+          </div>
         </section>
       </motion.div>
     </>
