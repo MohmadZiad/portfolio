@@ -1,4 +1,3 @@
-// ✅ Hero.tsx with Centralized Dark Mode Toggle Support
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
@@ -15,10 +14,13 @@ import "./Hero.css";
 // ====== Sounds ======
 const clickSound = new Howl({ src: ["/click.mp3"] });
 
-const Hero = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
+const Hero = ({
+  darkMode,
+  setDarkMode,
+}: {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [greeting, setGreeting] = useState("");
 
   // ====== Greeting Based on Time and Location ======
@@ -62,7 +64,7 @@ const Hero = () => {
       });
       annyang.start();
     }
-  }, []);
+  }, [setDarkMode]);
 
   // ====== Scroll Helper ======
   const scrollToSection = (id: string) => {
@@ -115,7 +117,7 @@ const Hero = () => {
       <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />
 
       <motion.div
-        className="hero-root"
+        className={`hero-root ${darkMode ? "dark" : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}

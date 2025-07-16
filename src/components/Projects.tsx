@@ -24,6 +24,10 @@ interface Project {
   codeLink: string;
 }
 
+interface ProjectsProps {
+  darkMode: boolean;
+}
+
 const projects: Project[] = [
   {
     title: "MZ-Store E-commerce",
@@ -57,105 +61,101 @@ const projects: Project[] = [
   },
 ];
 
-const Projects: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
+const Projects: React.FC<ProjectsProps> = ({ darkMode }) => {
   return (
     <section
-      className={`project-showcase ${darkMode ? "dark" : ""}`}
       id="projects"
+      className={`project-showcase ${darkMode ? "dark" : ""}`}
     >
-      <h2 className="projects-title">
-        <FaShoppingCart style={{ marginRight: "10px", color: "#10b981" }} />
-        Selected Projects That Deliver Value
-      </h2>
+      {/* Inner wrapper to control max-width and allow full bg coverage */}
+      <div className="inner-wrapper">
+        <h2 className="projects-title">
+          <FaShoppingCart style={{ color: "#0fa68b" }} /> My Featured Projects &
+          Products
+        </h2>
 
-      {projects.map((project, index) => {
-        const isAvocado = project.title.startsWith("Avocado");
+        {projects.map((project, index) => {
+          const isAvocado = project.title.includes("Avocado");
+          const rowClass = `project-row ${
+            isAvocado ? "avocado" : "mzstore"
+          } ${project.role.toLowerCase()} ${index % 2 !== 0 ? "reverse" : ""}`;
 
-        return (
-          <motion.div
-            className={`project-row glassy ${
-              isAvocado ? "avocado" : "mzstore"
-            } ${project.role === "Team" ? "team" : ""} ${
-              index % 2 !== 0 ? "reverse" : ""
-            }`}
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-          >
-            <div className="project-image">
-              <img src={project.image} alt={project.title} loading="lazy" />
-            </div>
-
-            <div className="project-details">
-              <h3>
-                {isAvocado ? (
-                  <FaSeedling
-                    style={{ marginRight: "10px", color: "#65a30d" }}
-                  />
-                ) : (
-                  <FaShoppingCart
-                    style={{ marginRight: "10px", color: "#f97316" }}
-                  />
-                )}
-                {project.title}
-              </h3>
-
-              <span
-                className={`project-role ${
-                  project.role === "Individual" ? "individual" : "team"
-                }`}
-              >
-                {project.role === "Individual" ? (
-                  <>
-                    <FaUser style={{ marginRight: "6px" }} />
-                    Individual Project
-                  </>
-                ) : (
-                  <>
-                    <FaUsers style={{ marginRight: "6px" }} />
-                    Team Project
-                  </>
-                )}
-              </span>
-
-              <p>{project.description}</p>
-
-              <div className="tech-stack">
-                <p>
-                  <strong>Frontend:</strong> {project.tech.frontend.join(", ")}
-                </p>
-                <p>
-                  <strong>Backend:</strong> {project.tech.backend.join(", ")}
-                </p>
-                <p>
-                  <strong>Tools:</strong> {project.tech.tools.join(", ")}
-                </p>
+          return (
+            <motion.div
+              key={index}
+              className={rowClass}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <div className="project-image">
+                <img
+                  src={project.image}
+                  alt={`Screenshot of ${project.title}`}
+                  loading="lazy"
+                />
               </div>
 
-              <div className="project-links">
-                <a
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaGamepad style={{ marginRight: "8px" }} />
-                  Live Demo
-                </a>
-                <a
-                  href={project.codeLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaCode style={{ marginRight: "8px" }} />
-                  Code
-                </a>
+              <div className="project-details">
+                <h3>
+                  {isAvocado ? (
+                    <FaSeedling className="icon-avocado" />
+                  ) : (
+                    <FaShoppingCart className="icon-mzstore" />
+                  )}
+                  {project.title}
+                </h3>
+
+                <span className={`project-role ${project.role.toLowerCase()}`}>
+                  {project.role === "Individual" ? (
+                    <>
+                      <FaUser style={{ marginRight: "6px" }} /> Individual
+                      Project
+                    </>
+                  ) : (
+                    <>
+                      <FaUsers style={{ marginRight: "6px" }} /> Team Project
+                    </>
+                  )}
+                </span>
+
+                <p>{project.description}</p>
+
+                <div className="tech-stack">
+                  <p>
+                    <strong>Frontend:</strong>{" "}
+                    {project.tech.frontend.join(", ")}
+                  </p>
+                  <p>
+                    <strong>Backend:</strong> {project.tech.backend.join(", ")}
+                  </p>
+                  <p>
+                    <strong>Tools:</strong> {project.tech.tools.join(", ")}
+                  </p>
+                </div>
+
+                <div className="project-links">
+                  <a
+                    href={project.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaGamepad style={{ marginRight: "8px" }} /> Live Demo
+                  </a>
+                  <a
+                    href={project.codeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaCode style={{ marginRight: "8px" }} /> Code
+                  </a>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        );
-      })}
+            </motion.div>
+          );
+        })}
+      </div>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+/* === Reset default margin/padding and ensure consistent box sizing === */
 *,
 *::before,
 *::after {
@@ -6,24 +7,32 @@
   box-sizing: border-box;
 }
 
-
+/* === Base body styles === */
 body {
   font-family: 'Inter', sans-serif, Arial, sans-serif;
   background-color: #f9fafb; 
-  color: #111827; 
+  color: #111827;             
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
+/* === Dark mode override styles for full-page background and text === */
+body.dark-mode {
+  background-color: #0f172a;  
+  color: #f1f5f9;            
+}
 
+/* === Base link styles === */
 a {
   color: inherit;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
+/* === Link hover effect === */
 a:hover {
-  color: #10b981; 
+  color: #10b981;             
   text-decoration: underline;
 }

@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import "./Services.css";
 
+// List of services with details
 const services = [
   {
     title: "Frontend Development",
@@ -91,8 +92,12 @@ const Services: React.FC = () => {
   return (
     <section id="services" className="services-section">
       <div className="services-content">
+        {/* Title and Tabs */}
         <div className="services-header">
-          <h2 className="services-title">Development Services Built for the Modern Web</h2>
+          <h2 className="services-title">
+            Development Services Built for the Modern Web
+          </h2>
+
           <div className="filter-tabs">
             {["All", "Frontend", "Backend", "UI/UX", "Tools"].map(
               (category) => (
@@ -108,6 +113,7 @@ const Services: React.FC = () => {
           </div>
         </div>
 
+        {/* Cards Grid */}
         <div className="services-grid">
           {filteredServices.map((service, index) => (
             <div

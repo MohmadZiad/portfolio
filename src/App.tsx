@@ -8,27 +8,29 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(
-    () => localStorage.getItem("theme") === "dark"
-  );
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-out",
-      once: true,
-      offset: 80,
-    });
+    AOS.init({ duration: 800, easing: "ease-out", once: true, offset: 80 });
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle("dark-mode", darkMode);
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("theme", "light");
+    }
   }, [darkMode]);
 
   return (
-    <div className="App">
+    // أضفت هنا class "dark" ديناميكيًا حسب حالة الـ darkMode
+    <div className={`App ${darkMode ? "dark" : ""}`}>
       <Hero darkMode={darkMode} setDarkMode={setDarkMode} />
+
       <Projects darkMode={darkMode} />
       <Services darkMode={darkMode} />
       <Contact darkMode={darkMode} />

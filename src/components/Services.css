@@ -139,7 +139,8 @@
 }
 
 @keyframes pulseIcon {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -221,4 +222,40 @@
     grid-template-columns: 1fr;
     padding: 0;
   }
+}
+
+/* ===== Dark Mode Support ===== */
+body.dark-mode .services-section {
+  background: #0f172a;
+}
+
+body.dark-mode .services-title {
+  -webkit-text-fill-color: #5eead4;
+}
+
+body.dark-mode .service-card {
+  background: #1e293b;
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.05);
+  border: 1px solid #334155;
+}
+
+body.dark-mode .service-heading {
+  color: #f8fafc;
+}
+
+body.dark-mode .service-bullets {
+  color: #cbd5e1;
+}
+
+body.dark-mode .usecase-button {
+  background: #22d3ee;
+  color: #0f172a;
+}
+
+body.dark-mode .usecase-button:hover {
+  background: #0ea5e9;
+}
+
+body.dark-mode .tag-badge {
+  background: linear-gradient(to right, #06b6d4, #67e8f9);
 }

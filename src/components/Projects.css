@@ -1,37 +1,100 @@
-/* === Section Container === */
+/* ===========================
+   CSS for Projects Section
+   Clean, well-commented, production-ready
+   Author: YourName
+   =========================== */
+
+/* === CSS Variables for colors === */
+:root {
+  --primary: #10b981;
+  --dark-bg: #0f172a;
+  --dark-card: #1e293b;
+  --dark-border: #334155;
+  --dark-text: #f1f5f9;
+  --dark-muted: #94a3b8;
+}
+
+/* === Base App background with smooth transition === */
+.App {
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.App.dark {
+  background-color: var(--dark-bg);
+}
+
+/* === Project Showcase Container ===
+   - Full width background with smooth gradient
+   - Padding for breathing space
+   - Uses Inter font for consistency */
 .project-showcase {
+  background: linear-gradient(to bottom, #f9fafb 0%, #ffffff 100%);
+  position: relative;
+  padding: 5rem clamp(1rem, 5vw, 3rem);
+  transition: background 0.4s ease;
+  font-family: "Inter", sans-serif;
+}
+
+/* === Center inner content and space out project rows === */
+.project-showcase .inner-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  padding: 5rem clamp(1rem, 5vw, 3rem);
-  background: linear-gradient(to bottom, #f9fafb 0%, #ffffff 100%);
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: "Inter", sans-serif;
-  scroll-behavior: smooth;
-  position: relative;
 }
 
+/* === Dark mode background and subtle inset shadow === */
+.dark .project-showcase {
+  background: linear-gradient(
+    to bottom,
+    var(--dark-bg) 0%,
+    var(--dark-card) 100%
+  );
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+/* === Decorative underline below section title === */
 .project-showcase::after {
   content: "";
   width: 60px;
   height: 4px;
-  background: #10b981;
+  background: var(--primary);
   margin: 1rem auto 0;
   border-radius: 999px;
   display: block;
 }
 
-.projects-title {
-  font-size: 3rem;
-  font-weight: 900;
-  margin-bottom: 3.5rem;
-  color: #0f172a;
-  text-align: center;
-  letter-spacing: -0.5px;
-  white-space: nowrap;
+/* === Projects Section Title ===
+   - Large bold font, centered, with letter spacing for refinement */
+   .projects-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 3.5rem;
+    background: linear-gradient(90deg, #00b48c, #0c9cf1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+  }
+  
+
+/* === Dark mode style for project title with subtle shadow and background === */
+.dark .projects-title {
+  color: var(--dark-text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  background-color: rgba(15, 23, 42, 0.95);
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border-radius: 0.75rem;
 }
 
+/* === Individual project row container ===
+   - Flexbox layout, responsive wrapping
+   - Light background with border, rounded corners, and subtle shadow
+   - Smooth transform and shadow on hover */
 .project-row {
   display: flex;
   align-items: center;
@@ -41,99 +104,139 @@
   padding: 2.5rem 2rem;
   border-radius: 1.5rem;
   background: #ffffff;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
   border: 1px solid #e5e7eb;
   position: relative;
   overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
 }
 
 .project-row:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
+/* === Dark mode styles for project row === */
+.dark .project-row {
+  background: linear-gradient(135deg, var(--dark-card), var(--dark-bg));
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* === Reverse flex direction for alternating layout === */
 .project-row.reverse {
   flex-direction: row-reverse;
 }
 
-.project-row:nth-child(odd) {
-  background: linear-gradient(to left, #f0fdf4, #ffffff);
-}
-
-.project-row:nth-child(even) {
-  background: linear-gradient(to right, #eff6ff, #ffffff);
-}
-
-.project-row::before {
+/* === Top colored gradient bar for project rows === */
+.project-row.avocado::before,
+.project-row.mzstore::before {
   content: "";
   width: 100%;
   height: 6px;
-  display: block;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
   position: absolute;
   top: 0;
   left: 0;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  z-index: 1;
 }
 
-.project-row.avocado::before {
-  background: linear-gradient(to right, #65a30d, #bef264);
-}
-
+/* === Orange gradient for MZ-Store project === */
 .project-row.mzstore::before {
   background: linear-gradient(to right, #f97316, #fcd34d);
 }
 
-.project-row.avocado {
-  border: 1.5px solid #a3e635;
-  background: radial-gradient(circle at top left, #f0fdf4, #ffffff);
+/* === Green gradient for Avocado project === */
+.project-row.avocado::before {
+  background: linear-gradient(to right, #65a30d, #bef264);
 }
 
-.project-row.mzstore {
-  border: 1.5px solid #fdba74;
-  background: radial-gradient(circle at top left, #fff7ed, #ffffff);
-}
-
+/* === Project Image Container ===
+   - Responsive flexible sizing with min/max width */
 .project-image {
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
   max-width: 520px;
   position: relative;
-  margin-inline-start: auto;
+  z-index: 1;
 }
 
+/* === Glow effect behind project image === */
+.project-image::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  height: 160%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 1.25rem;
+  filter: blur(40px);
+  opacity: 0.6;
+  transition: all 0.4s ease;
+}
+
+/* === Glow color for MZ-Store project image === */
+.project-row.mzstore .project-image::before {
+  background: radial-gradient(circle, #f97316aa, #fcd34daa 80%);
+}
+
+/* === Glow color for Avocado project image === */
+.project-row.avocado .project-image::before {
+  background: radial-gradient(circle, #65a30daa, #bef264aa 80%);
+}
+
+/* === Project image styles ===
+   - Full width with rounded corners and subtle shadow
+   - Smooth scale on hover for interactivity */
 .project-image img {
   width: 100%;
   border-radius: 1.25rem;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-  transition: transform 0.45s ease, filter 0.45s ease;
   border: 1px solid #e5e7eb;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.08));
+  object-fit: cover;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease;
 }
 
 .project-image img:hover {
   transform: scale(1.045);
-  filter: brightness(1.04) contrast(1.01);
 }
 
+/* === Dark mode border and shadow for project images === */
+.dark .project-image img {
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* === Project details container ===
+   - Flexible sizing with min/max widths */
 .project-details {
   flex: 1;
   min-width: 280px;
   max-width: 600px;
 }
 
+/* === Project title styling ===
+   - Large, bold, aligned horizontally with icon and spacing */
 .project-details h3 {
   font-size: 2.4rem;
   font-weight: 900;
   margin-bottom: 0.9rem;
   color: #111827;
-  letter-spacing: -0.03em;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+/* === Dark mode project title color === */
+.dark .project-details h3 {
+  color: var(--dark-text);
+}
+
+/* === Project role badge ===
+   - Small rounded badge with padding and colors depending on role */
 .project-role {
   font-size: 0.85rem;
   font-weight: 600;
@@ -141,24 +244,32 @@
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   margin-bottom: 1.2rem;
-  user-select: none;
   background: #f1f5f9;
   color: #111827;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
 }
 
+/* === Green variant for individual projects === */
 .project-role.individual {
   color: #059669;
   background: #ecfdf5;
 }
 
+/* === Blue variant for team projects === */
 .project-role.team {
   color: #2563eb;
   background: #eff6ff;
 }
 
+/* === Dark mode badge styling === */
+.dark .project-role {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+}
+
+/* === Project description text === */
 .project-details p {
   font-size: 1.08rem;
   color: #374151;
@@ -166,66 +277,70 @@
   line-height: 1.7;
 }
 
-.tech-stack {
-  margin-bottom: 1.5rem;
+/* === Dark mode description color === */
+.dark .project-details p {
+  color: #cbd5e1;
 }
 
+/* === Tech stack text styling === */
 .tech-stack p {
   font-size: 0.96rem;
   color: #4b5563;
-  margin: 0.4rem 0 0.2rem;
-  line-height: 1.6;
+  margin: 0.4rem 0;
 }
 
+/* === Dark mode tech stack text color === */
+.dark .tech-stack p {
+  color: #cbd5e1;
+}
+
+/* === Tech stack strong emphasis === */
 .tech-stack strong {
   color: #1f2937;
 }
 
+/* === Dark mode strong tech stack color === */
+.dark .tech-stack strong {
+  color: #ffffff;
+}
+
+/* === Project action buttons container === */
 .project-links {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
+/* === Common styles for buttons === */
 .project-links a {
   padding: 0.65rem 1.5rem;
   border-radius: 12px;
   font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none;
-  color: white;
-  transition: all 0.35s ease;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: #10b981;
-  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.25);
-  position: relative;
-  overflow: hidden;
+  transition: all 0.35s ease;
 }
 
-.project-links a::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.08);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* === Primary button styles (Live Demo) === */
+.project-links a:first-child {
+  background: linear-gradient(90deg, #00b48c, #0c9cf1);
+  color: white;
+  box-shadow: 0 8px 20px rgba(0, 180, 140, 0.5);
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
 }
 
-.project-links a:hover::before {
-  opacity: 1;
+.project-links a:first-child:hover {
+  background: linear-gradient(90deg, #00996d, #0774cc);
+  box-shadow: 0 12px 30px rgba(0, 150, 110, 0.7);
+  transform: translateY(-3px);
 }
 
-.project-links a:hover {
-  background-color: #059669;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-  transform: translateY(-1px);
-}
-
+/* === Secondary button styles (Code) === */
 .project-links a:last-child {
   background-color: #1f2937;
+  color: white;
 }
 
 .project-links a:last-child:hover {
@@ -233,106 +348,70 @@
   box-shadow: 0 0 15px rgba(17, 24, 39, 0.4);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .project-row,
-  .project-row.reverse {
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-  }
+/* === Dark mode primary button styles (Live Demo) === */
+.dark .project-links a:first-child {
+  background: linear-gradient(90deg, #00996d, #0774cc);
+  box-shadow: 0 12px 30px rgba(0, 150, 110, 0.7);
+  cursor: pointer;
+}
 
-  .projects-title {
-    font-size: 2.3rem;
-    white-space: normal;
+.dark .project-links a:first-child:hover {
+  background: linear-gradient(90deg, #007a55, #055ea3);
+  box-shadow: 0 15px 35px rgba(0, 120, 85, 0.8);
+  cursor: pointer;
+}
+
+/* === Dark mode secondary button styles === */
+.dark .project-links a:last-child {
+  background-color: #0f172a;
+  border: 1px solid var(--dark-border);
+  cursor: pointer;
+}
+
+.dark .project-links a:last-child:hover {
+  background-color: #1e293b;
+  cursor: pointer;
+}
+
+
+/* === Icons color for projects === */
+.icon-green {
+  margin-right: 10px;
+  color: var(--primary);
+}
+
+.icon-avocado {
+  margin-right: 10px;
+  color: #65a30d;
+}
+
+.icon-mzstore {
+  margin-right: 10px;
+  color: #f97316;
+}
+
+/* === Responsive adjustments for smaller screens === */
+@media (max-width: 768px) {
+  .project-row {
+    flex-direction: column;
+    text-align: center;
   }
 
   .project-details h3 {
-    font-size: 1.9rem;
-  }
-
-  .project-image {
-    max-width: 100%;
-    margin-left: 0;
-  }
-
-  .project-image img {
-    max-height: 250px;
-    object-fit: cover;
+    justify-content: center;
+    font-size: 1.8rem;
   }
 
   .project-links {
     justify-content: center;
   }
-}
 
-/* ===== Dark Mode for Projects ===== */
-body.dark-mode {
-  background-color: #0f172a;
-}
+  .projects-title {
+    font-size: 2.2rem;
+    white-space: normal;
+  }
 
-body.dark-mode .project-showcase {
-  background: #1e293b !important;
-}
-
-body.dark-mode .projects-title {
-  color: #f8fafc !important;
-}
-
-body.dark-mode .project-row {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.02) !important;
-}
-
-body.dark-mode .project-row:hover {
-  box-shadow: 0 20px 60px rgba(255, 255, 255, 0.04) !important;
-}
-
-body.dark-mode .project-row.avocado,
-body.dark-mode .project-row.mzstore {
-  background: #1e293b !important;
-}
-
-body.dark-mode .project-details h3 {
-  color: #f8fafc !important;
-}
-
-body.dark-mode .project-details p {
-  color: #cbd5e1 !important;
-}
-
-body.dark-mode .project-role {
-  background: #334155 !important;
-  color: #e2e8f0 !important;
-}
-
-body.dark-mode .project-role.individual {
-  background: #064e3b !important;
-  color: #6ee7b7 !important;
-}
-
-body.dark-mode .project-role.team {
-  background: #1e40af !important;
-  color: #93c5fd !important;
-}
-
-body.dark-mode .tech-stack p {
-  color: #94a3b8 !important;
-}
-
-body.dark-mode .tech-stack strong {
-  color: #f1f5f9 !important;
-}
-
-body.dark-mode .project-links a {
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1) !important;
-}
-
-body.dark-mode .project-links a:last-child {
-  background-color: #334155 !important;
-}
-
-body.dark-mode .project-links a:last-child:hover {
-  background-color: #1e293b !important;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1) !important;
+  .project-image img {
+    max-height: 240px;
+  }
 }
