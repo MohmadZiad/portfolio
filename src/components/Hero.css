@@ -114,6 +114,7 @@ body {
   margin: 0;
 }
 
+/* تعديل مهم: لضمان ظهور نص Typewriter بالألوان الصحيحة */
 .title {
   font-size: 3.8rem;
   font-weight: 900;
@@ -122,6 +123,20 @@ body {
   color: #0f172a;
   word-break: break-word;
   white-space: normal;
+  display: inline-block;
+}
+
+/* نص الـ Typewriter يرث اللون من الأب */
+.title span {
+  color: inherit !important;
+}
+
+body.dark-mode .title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .title span {
+  color: inherit !important;
 }
 
 .subtitle {
