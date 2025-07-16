@@ -1,17 +1,20 @@
 :root {
-  --primary: linear-gradient(135deg, #16c79a, #10b981);
+  --primary: linear-gradient(135deg, #10b981, #0ea5e9);
   --primary-solid: #10b981;
-  --text: #111827;
-  --muted: #6b7280;
-  --bg: #f9fafb;
-  --form-bg: rgba(255, 255, 255, 0.35);
+  --text: #0f172a;
+  --muted: #475569;
+  --bg: linear-gradient(to bottom right, #f8fafc, #ffffff);
+  --form-bg: rgba(255, 255, 255, 0.5);
   --card-shadow: 0 20px 45px rgba(16, 185, 129, 0.08);
 }
 
 /* Wrapper */
 .contactBG {
-  background-color: #f9fafb;
-  background-image: radial-gradient(#10b981 0.8px, transparent 0.8px);
+  background: var(--bg);
+  background-image: radial-gradient(
+    var(--primary-solid) 0.8px,
+    transparent 0.8px
+  );
   background-size: 20px 20px;
   padding: 6rem 2rem;
   display: flex;
@@ -39,7 +42,8 @@
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #10b981, #059669);
+  /* تغيير اللون ليطابق الهيرو */
+  background: linear-gradient(135deg, #10b981, #0ea5e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -69,6 +73,7 @@
   color: var(--primary-solid);
   margin-top: 3px;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .infoItem:hover .infoIcon {
@@ -88,10 +93,12 @@
   font-size: 0.95rem;
   text-decoration: none;
   transition: color 0.25s ease;
+  word-break: break-word;
 }
 
 .infoLink:hover {
   color: var(--primary-solid);
+  text-decoration: underline;
 }
 
 .copyIcon {
@@ -102,6 +109,7 @@
   color: #9ca3af;
   opacity: 0;
   transition: 0.3s ease;
+  flex-shrink: 0;
 }
 
 .copyIcon.active {
@@ -161,6 +169,7 @@
   border: 1px solid #e5e7eb;
   background: rgba(255, 255, 255, 0.95);
   transition: all 0.3s ease, transform 0.3s ease;
+  resize: vertical;
 }
 
 .inputField:focus {
@@ -200,10 +209,15 @@
   cursor: pointer;
 }
 
-.submitBtn:hover {
+.submitBtn:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 15px 30px rgba(16, 185, 129, 0.35);
   opacity: 0.9;
+}
+
+.submitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Spinner */

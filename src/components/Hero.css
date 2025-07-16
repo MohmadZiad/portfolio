@@ -104,7 +104,7 @@ body,
 }
 
 .title {
-  font-size: 3.2rem;
+  font-size: 3.8rem; /* تكبير الخط */
   font-weight: 900;
   line-height: 1.2;
   margin: 1.2rem 0;
@@ -187,44 +187,45 @@ body,
 
 /* ===== Image Wrapper ===== */
 .hero-img-wrapper {
-  flex: 1 1 350px;
+  flex: 1 1 460px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   align-self: center;
-  padding-top: 1.5rem;
+  padding-top: 0.5rem; /* تقليل المسافة العلوية */
+  padding-bottom: 1.5rem;
 }
 
 /* ===== Image ===== */
 .profile-img {
-  width: 300px;
+  width: 440px;
   max-width: 100%;
   height: auto;
   border-radius: 1.5rem;
   z-index: 2;
   position: relative;
   object-fit: cover;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08),
-    0 0 120px rgba(16, 185, 129, 0.65), 0 0 80px rgba(14, 165, 233, 0.35);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08), 0 0 160px rgba(16, 185, 129, 0.7),
+    0 0 110px rgba(14, 165, 233, 0.45);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-img:hover {
   transform: scale(1.05);
-  box-shadow: 0 16px 40px rgba(16, 185, 129, 0.55),
-    0 0 150px rgba(14, 165, 233, 0.5);
+  box-shadow: 0 20px 45px rgba(16, 185, 129, 0.6),
+    0 0 180px rgba(14, 165, 233, 0.55);
 }
 
 /* ===== Tooltip on Hover ===== */
 .hero-img-wrapper::after {
   content: "Hi there 👋";
   position: absolute;
-  top: -35px;
+  top: -55px;
   background: #10b981;
   color: white;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
   border-radius: 8px;
   opacity: 0;
   transform: translateY(10px);
@@ -241,11 +242,11 @@ body,
 /* ===== Blob Animation ===== */
 .hero-blob {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
   background: radial-gradient(circle at center, #a7f3d0 0%, transparent 80%);
-  filter: blur(90px);
+  filter: blur(100px);
   z-index: 0;
   top: 55%;
   left: 50%;

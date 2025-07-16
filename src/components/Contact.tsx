@@ -20,10 +20,9 @@ const Contact: React.FC = () => {
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.elements.namedItem("from_name") as HTMLInputElement)
-      ?.value;
-    const email = (form.elements.namedItem("from_email") as HTMLInputElement)
-      ?.value;
+    const name = (form.elements.namedItem("from_name") as HTMLInputElement)?.value;
+    const email = (form.elements.namedItem("from_email") as HTMLInputElement)?.value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value;
 
     let valid = true;
 
@@ -44,6 +43,11 @@ const Contact: React.FC = () => {
       setEmailError("");
     }
 
+    if (!message.trim()) {
+      toast.error("Message is required.");
+      valid = false;
+    }
+
     if (!valid) return;
 
     setLoading(true);
@@ -62,7 +66,8 @@ const Contact: React.FC = () => {
       } else {
         toast.error("❌ Failed to send message.");
       }
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast.error("❌ Something went wrong.");
     } finally {
       setLoading(false);
@@ -71,7 +76,7 @@ const Contact: React.FC = () => {
 
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
-    toast.info("Copied to clipboard");
+    toast.info(`${label} copied to clipboard`);
     setCopiedField(label);
     setTimeout(() => setCopiedField(""), 1500);
   };
@@ -130,26 +135,38 @@ const Contact: React.FC = () => {
                 </div>
                 <Copy
                   size={16}
-                  className={`copyIcon ${
-                    copiedField === label ? "active" : ""
-                  }`}
+                  className={`copyIcon ${copiedField === label ? "active" : ""}`}
                   onClick={() => handleCopy(value, label)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Copy ${label}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleCopy(value, label);
+                    }
+                  }}
                 />
               </div>
             ))}
           </div>
         </div>
 
-        <form onSubmit={sendEmail} className="contactForm" data-aos="fade-left">
+        <form onSubmit={sendEmail} className="contactForm" data-aos="fade-left" noValidate>
           <div className="formGroup">
             <input
               name="from_name"
               type="text"
               placeholder="Your Name"
               className={`inputField ${nameError ? "invalid" : ""}`}
+              aria-invalid={!!nameError}
+              aria-describedby="name-error"
               required
             />
-            {nameError && <span className="errorText">{nameError}</span>}
+            {nameError && (
+              <span className="errorText" id="name-error" aria-live="assertive">
+                {nameError}
+              </span>
+            )}
           </div>
 
           <div className="formGroup">
@@ -158,9 +175,15 @@ const Contact: React.FC = () => {
               type="email"
               placeholder="Your Email"
               className={`inputField ${emailError ? "invalid" : ""}`}
+              aria-invalid={!!emailError}
+              aria-describedby="email-error"
               required
             />
-            {emailError && <span className="errorText">{emailError}</span>}
+            {emailError && (
+              <span className="errorText" id="email-error" aria-live="assertive">
+                {emailError}
+              </span>
+            )}
           </div>
 
           <div className="formGroup">
@@ -170,10 +193,17 @@ const Contact: React.FC = () => {
               rows={5}
               className="inputField"
               required
+              aria-required="true"
             />
           </div>
 
-          <button type="submit" className="submitBtn" disabled={loading}>
+          <button
+            type="submit"
+            className="submitBtn"
+            disabled={loading}
+            aria-busy={loading}
+            aria-disabled={loading}
+          >
             {loading ? (
               <div className="spinner" />
             ) : (

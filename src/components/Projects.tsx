@@ -57,9 +57,12 @@ const projects: Project[] = [
   },
 ];
 
-const Projects: React.FC = () => {
+const Projects: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
   return (
-    <section className="project-showcase" id="projects">
+    <section
+      className={`project-showcase ${darkMode ? "dark" : ""}`}
+      id="projects"
+    >
       <h2 className="projects-title">
         <FaShoppingCart style={{ marginRight: "10px", color: "#10b981" }} />
         Selected Projects That Deliver Value

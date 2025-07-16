@@ -1,13 +1,15 @@
 import React from "react";
 import "./Footer.css";
 
-const Footer = () => {
+interface FooterProps {
+  darkMode: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ darkMode }) => {
   return (
-    <footer className="footer-gradient">
+    <footer className={darkMode ? "footer-gradient dark" : "footer-gradient"}>
       <div className="footer-content">
-        <p className="copyright">
-          © 2025 Mohmad Ali. All rights reserved.
-        </p>
+        <p className="copyright">© 2025 Mohmad Ali. All rights reserved.</p>
         <div className="social-links">
           <a
             href="https://linkedin.com/in/mohmadali"

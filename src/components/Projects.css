@@ -2,7 +2,7 @@
 .project-showcase {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 2.5rem;
   padding: 5rem clamp(1rem, 5vw, 3rem);
   background: linear-gradient(to bottom, #f9fafb 0%, #ffffff 100%);
   max-width: 1200px;
@@ -233,6 +233,7 @@
   box-shadow: 0 0 15px rgba(17, 24, 39, 0.4);
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .project-row,
   .project-row.reverse {
@@ -262,4 +263,76 @@
   .project-links {
     justify-content: center;
   }
+}
+
+/* ===== Dark Mode for Projects ===== */
+body.dark-mode {
+  background-color: #0f172a;
+}
+
+body.dark-mode .project-showcase {
+  background: #1e293b !important;
+}
+
+body.dark-mode .projects-title {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .project-row {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.02) !important;
+}
+
+body.dark-mode .project-row:hover {
+  box-shadow: 0 20px 60px rgba(255, 255, 255, 0.04) !important;
+}
+
+body.dark-mode .project-row.avocado,
+body.dark-mode .project-row.mzstore {
+  background: #1e293b !important;
+}
+
+body.dark-mode .project-details h3 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .project-details p {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .project-role {
+  background: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode .project-role.individual {
+  background: #064e3b !important;
+  color: #6ee7b7 !important;
+}
+
+body.dark-mode .project-role.team {
+  background: #1e40af !important;
+  color: #93c5fd !important;
+}
+
+body.dark-mode .tech-stack p {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .tech-stack strong {
+  color: #f1f5f9 !important;
+}
+
+body.dark-mode .project-links a {
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .project-links a:last-child {
+  background-color: #334155 !important;
+}
+
+body.dark-mode .project-links a:last-child:hover {
+  background-color: #1e293b !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1) !important;
 }

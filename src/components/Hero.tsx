@@ -1,3 +1,4 @@
+// ✅ Hero.tsx with Centralized Dark Mode Toggle Support
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
@@ -15,7 +16,9 @@ import "./Hero.css";
 const clickSound = new Howl({ src: ["/click.mp3"] });
 
 const Hero = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
   const [greeting, setGreeting] = useState("");
 
   // ====== Greeting Based on Time and Location ======
@@ -37,9 +40,16 @@ const Hero = () => {
       });
   }, []);
 
-  // ====== Apply Dark Mode ======
+  // ====== Apply Dark Mode Globally ======
   useEffect(() => {
-    document.body.classList.toggle("dark-mode", darkMode);
+    const body = document.body;
+    if (darkMode) {
+      body.classList.add("dark-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      body.classList.remove("dark-mode");
+      localStorage.setItem("theme", "light");
+    }
   }, [darkMode]);
 
   // ====== Voice Commands ======
@@ -86,7 +96,6 @@ const Hero = () => {
 
   return (
     <>
-      {/* ==== Particles Background ==== */}
       <Particles
         id="tsparticles"
         options={{
@@ -103,17 +112,14 @@ const Hero = () => {
         }}
       />
 
-      {/* ==== Custom Cursor ==== */}
       <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />
 
-      {/* ==== Hero Section ==== */}
       <motion.div
         className="hero-root"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* ==== Header ==== */}
         <header className="hero-header">
           <div className="logo">MOHAMMAD</div>
           <nav>
@@ -132,9 +138,7 @@ const Hero = () => {
           </nav>
         </header>
 
-        {/* ==== Hero Content ==== */}
         <section className="hero-content">
-          {/* ==== Text Side ==== */}
           <motion.div
             className="hero-text"
             initial={{ x: -50, opacity: 0 }}
@@ -171,7 +175,6 @@ const Hero = () => {
               View my work
             </motion.button>
 
-            {/* ==== Social Icons ==== */}
             <div className="social-icons">
               <a
                 href="https://www.linkedin.com/in/mohmadali/"
@@ -207,7 +210,6 @@ const Hero = () => {
               </a>
             </div>
 
-            {/* ==== Skills Marquee ==== */}
             <div className="skills-marquee">
               <span>React.js</span>
               <span>Next.js</span>
@@ -219,7 +221,6 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* ==== Image Side ==== */}
           <div className="hero-img-wrapper">
             <Tilt glareEnable glareMaxOpacity={0.2} scale={1.02}>
               <motion.img
