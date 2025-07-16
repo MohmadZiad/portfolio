@@ -28,12 +28,18 @@ const Hero: React.FC<HeroProps> = ({ darkMode, setDarkMode }) => {
   useEffect(() => {
     const hour = new Date().getHours();
     const baseGreeting =
-      hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+      hour < 12
+        ? "Good morning"
+        : hour < 18
+        ? "Good afternoon"
+        : "Good evening";
 
     fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((data) => {
-        setGreeting(`${baseGreeting}, I'm Mohammad Ali from ${data.country_name}`);
+        setGreeting(
+          `${baseGreeting}, I'm Mohammad Ali from ${data.country_name}`
+        );
       })
       .catch(() => {
         setGreeting(`${baseGreeting}, I'm Mohammad Ali`);

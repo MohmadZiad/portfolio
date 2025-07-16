@@ -20,9 +20,12 @@ const Contact: React.FC = () => {
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.elements.namedItem("from_name") as HTMLInputElement)?.value;
-    const email = (form.elements.namedItem("from_email") as HTMLInputElement)?.value;
-    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value;
+    const name = (form.elements.namedItem("from_name") as HTMLInputElement)
+      ?.value;
+    const email = (form.elements.namedItem("from_email") as HTMLInputElement)
+      ?.value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)
+      ?.value;
 
     let valid = true;
 
@@ -53,10 +56,10 @@ const Contact: React.FC = () => {
     setLoading(true);
     try {
       const result = await emailjs.sendForm(
-        "service_hv48jma",
-        "template_8l8iuih",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         form,
-        "sDnkJ3fgWqDFoReP4"
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
       if (result.status === 200) {
         toast.success("✅ Message sent!");
@@ -135,7 +138,9 @@ const Contact: React.FC = () => {
                 </div>
                 <Copy
                   size={16}
-                  className={`copyIcon ${copiedField === label ? "active" : ""}`}
+                  className={`copyIcon ${
+                    copiedField === label ? "active" : ""
+                  }`}
                   onClick={() => handleCopy(value, label)}
                   role="button"
                   tabIndex={0}
@@ -151,7 +156,12 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        <form onSubmit={sendEmail} className="contactForm" data-aos="fade-left" noValidate>
+        <form
+          onSubmit={sendEmail}
+          className="contactForm"
+          data-aos="fade-left"
+          noValidate
+        >
           <div className="formGroup">
             <input
               name="from_name"
@@ -180,7 +190,11 @@ const Contact: React.FC = () => {
               required
             />
             {emailError && (
-              <span className="errorText" id="email-error" aria-live="assertive">
+              <span
+                className="errorText"
+                id="email-error"
+                aria-live="assertive"
+              >
                 {emailError}
               </span>
             )}
