@@ -27,14 +27,13 @@ function App() {
   }, [darkMode]);
 
   return (
-    // أضفت هنا class "dark" ديناميكيًا حسب حالة الـ darkMode
     <div className={`App ${darkMode ? "dark" : ""}`}>
       <Hero darkMode={darkMode} setDarkMode={setDarkMode} />
 
       <Projects darkMode={darkMode} />
       <Services darkMode={darkMode} />
-      <Contact darkMode={darkMode} />
-      <Footer darkMode={darkMode} />
+      <Contact />
+      <Footer />
     </div>
   );
 }

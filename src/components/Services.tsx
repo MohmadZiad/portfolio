@@ -9,7 +9,12 @@ import {
 } from "react-icons/fa";
 import "./Services.css";
 
-// List of services with details
+// Interface for props to accept darkMode boolean
+interface ServicesProps {
+  darkMode: boolean;
+}
+
+// List of services with details and categories
 const services = [
   {
     title: "Frontend Development",
@@ -83,16 +88,22 @@ const services = [
   },
 ];
 
-const Services: React.FC = () => {
+const Services: React.FC<ServicesProps> = ({ darkMode }) => {
+  // State to manage selected category filter
   const [filter, setFilter] = useState("All");
 
+  // Filter services based on selected category
   const filteredServices =
     filter === "All" ? services : services.filter((s) => s.tag === filter);
 
   return (
-    <section id="services" className="services-section">
+    // Add dark mode class dynamically based on prop
+    <section
+      id="services"
+      className={`services-section ${darkMode ? "dark" : ""}`}
+    >
       <div className="services-content">
-        {/* Title and Tabs */}
+        {/* Header with title and filter tabs */}
         <div className="services-header">
           <h2 className="services-title">
             Development Services Built for the Modern Web
@@ -105,6 +116,7 @@ const Services: React.FC = () => {
                   key={category}
                   onClick={() => setFilter(category)}
                   className={filter === category ? "active" : ""}
+                  aria-pressed={filter === category}
                 >
                   {category}
                 </button>
@@ -113,7 +125,7 @@ const Services: React.FC = () => {
           </div>
         </div>
 
-        {/* Cards Grid */}
+        {/* Services cards grid */}
         <div className="services-grid">
           {filteredServices.map((service, index) => (
             <div

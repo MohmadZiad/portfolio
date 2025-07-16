@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { Typewriter } from "react-simple-typewriter";
@@ -84,7 +84,8 @@ const Hero: React.FC<HeroProps> = ({ darkMode, setDarkMode }) => {
     const handleScroll = () => {
       let current = "";
       sections.forEach((section) => {
-        const top = section.offsetTop - 100;
+        // Fix TypeScript error by asserting HTMLElement
+        const top = (section as HTMLElement).offsetTop - 100;
         if (window.scrollY >= top) {
           current = section.getAttribute("id") || "";
         }

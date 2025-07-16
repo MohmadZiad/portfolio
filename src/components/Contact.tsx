@@ -13,13 +13,16 @@ const Contact: React.FC = () => {
   const [emailError, setEmailError] = useState("");
   const [copiedField, setCopiedField] = useState("");
 
+  // Animate on scroll initialization
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
 
+  // Handle email form submission using EmailJS
   const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
+
     const name = (form.elements.namedItem("from_name") as HTMLInputElement)
       ?.value;
     const email = (form.elements.namedItem("from_email") as HTMLInputElement)
@@ -29,6 +32,7 @@ const Contact: React.FC = () => {
 
     let valid = true;
 
+    // Validate name
     if (!name.trim()) {
       setNameError("Name is required");
       toast.error("Name is required.");
@@ -37,6 +41,7 @@ const Contact: React.FC = () => {
       setNameError("");
     }
 
+    // Validate email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       setEmailError("Invalid email");
@@ -46,6 +51,7 @@ const Contact: React.FC = () => {
       setEmailError("");
     }
 
+    // Validate message
     if (!message.trim()) {
       toast.error("Message is required.");
       valid = false;
@@ -61,6 +67,7 @@ const Contact: React.FC = () => {
         form,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
+
       if (result.status === 200) {
         toast.success("✅ Message sent!");
         form.reset();
@@ -77,6 +84,7 @@ const Contact: React.FC = () => {
     }
   };
 
+  // Handle copying info fields (like email, location)
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast.info(`${label} copied to clipboard`);
@@ -88,6 +96,7 @@ const Contact: React.FC = () => {
     <section id="contact" className="contactBG">
       <ToastContainer position="top-center" autoClose={3000} limit={1} />
       <div className="contactContent">
+        {/* Left text/info section */}
         <div className="contactText" data-aos="fade-right">
           <h2 className="contactTitle">📬 Let’s Connect</h2>
           <p className="contactDescription">
@@ -156,12 +165,14 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
+        {/* Right side form section */}
         <form
           onSubmit={sendEmail}
           className="contactForm"
           data-aos="fade-left"
           noValidate
         >
+          {/* Name field */}
           <div className="formGroup">
             <input
               name="from_name"
@@ -179,6 +190,7 @@ const Contact: React.FC = () => {
             )}
           </div>
 
+          {/* Email field */}
           <div className="formGroup">
             <input
               name="from_email"
@@ -200,6 +212,7 @@ const Contact: React.FC = () => {
             )}
           </div>
 
+          {/* Message textarea */}
           <div className="formGroup">
             <textarea
               name="message"
@@ -211,6 +224,7 @@ const Contact: React.FC = () => {
             />
           </div>
 
+          {/* Submit button */}
           <button
             type="submit"
             className="submitBtn"
