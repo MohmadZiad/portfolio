@@ -98,6 +98,9 @@ body {
 .hero-text {
   flex: 1 1 300px;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .greeting {
@@ -123,7 +126,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* ====== CTA Button ====== */
+/* ====== CTA Button (Updated Width) ====== */
 .cta {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
@@ -136,6 +139,9 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1rem;
+  width: max-content;      /* عرض حسب المحتوى */
+  min-width: 180px;        /* عرض أدنى */
+  white-space: nowrap;     /* لمنع التفاف النص داخل الزر */
 }
 
 .cta:hover {
@@ -365,4 +371,21 @@ body.dark-mode .subtitle {
 
 body.dark-mode .skills-marquee span {
   color: #5eead4;
+}
+
+/* ====== Active Nav Link Styling ====== */
+.hero-header nav a.active {
+  color: #10b981;
+  font-weight: 700;
+  border-bottom: 2px solid #10b981;
+  padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+/* ====== Vertical Centering of Text and Image Wrapper ====== */
+.hero-text,
+.hero-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

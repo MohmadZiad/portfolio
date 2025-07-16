@@ -14,31 +14,29 @@ import "./Hero.css";
 // ====== Sounds ======
 const clickSound = new Howl({ src: ["/click.mp3"] });
 
-const Hero = ({
-  darkMode,
-  setDarkMode,
-}: {
+interface HeroProps {
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}
+
+const Hero: React.FC<HeroProps> = ({ darkMode, setDarkMode }) => {
   const [greeting, setGreeting] = useState("");
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [scrolled, setScrolled] = useState<boolean>(false);
 
   // ====== Greeting Based on Time and Location ======
   useEffect(() => {
     const hour = new Date().getHours();
     const baseGreeting =
-      hour < 12
-        ? "Good morning"
-        : hour < 18
-        ? "Good afternoon"
-        : "Good evening";
+      hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
     fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((data) => {
-        setGreeting(
-          `${baseGreeting}, I'm Mohammad Ali from ${data.country_name}`
-        );
+        setGreeting(`${baseGreeting}, I'm Mohammad Ali from ${data.country_name}`);
+      })
+      .catch(() => {
+        setGreeting(`${baseGreeting}, I'm Mohammad Ali`);
       });
   }, []);
 
@@ -66,6 +64,32 @@ const Hero = ({
     }
   }, [setDarkMode]);
 
+  // ====== Scroll Listener for Glass Navbar ======
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    onScroll(); // initial
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // ====== Scrollspy Active Link ======
+  useEffect(() => {
+    const sections = document.querySelectorAll("section[id]");
+    const handleScroll = () => {
+      let current = "";
+      sections.forEach((section) => {
+        const top = section.offsetTop - 100;
+        if (window.scrollY >= top) {
+          current = section.getAttribute("id") || "";
+        }
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // ====== Scroll Helper ======
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -84,7 +108,7 @@ const Hero = ({
     { target: imgRef }
   );
 
-  // ====== Custom Cursor Movement ======
+  // ====== Custom Cursor ======
   const cursorRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -122,12 +146,16 @@ const Hero = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <header className="hero-header">
+        <header className={`hero-header ${scrolled ? "scrolled" : ""}`}>
           <div className="logo">MOHAMMAD</div>
           <nav>
             {["services", "projects", "contact"].map((id) => (
-              <a key={id} href={`#${id}`}>
-                {id[0].toUpperCase() + id.slice(1)}
+              <a
+                key={id}
+                href={`#${id}`}
+                className={activeSection === id ? "active" : ""}
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
               </a>
             ))}
             <button
@@ -143,9 +171,10 @@ const Hero = ({
         <section className="hero-content">
           <motion.div
             className="hero-text"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
+            initial={{ x: -40, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
           >
             <p className="greeting">{greeting}</p>
             <h1 className="title">
@@ -164,7 +193,6 @@ const Hero = ({
               MERAKI Academy graduate skilled in JavaScript, React.js, Node.js,
               MongoDB, and PostgreSQL.
             </p>
-
             <motion.button
               onClick={() => {
                 clickSound.play();
@@ -176,7 +204,6 @@ const Hero = ({
             >
               View my work
             </motion.button>
-
             <div className="social-icons">
               <a
                 href="https://www.linkedin.com/in/mohmadali/"
@@ -211,7 +238,6 @@ const Hero = ({
                 <i className="fab fa-youtube" />
               </a>
             </div>
-
             <div className="skills-marquee">
               <span>React.js</span>
               <span>Next.js</span>
