@@ -415,3 +415,24 @@ body.dark-mode .skills-marquee span {
     font-size: 1.6rem;
   }
 }
+
+.cta {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #10b981, #0ea5e9);
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 165, 125, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  width: max-content;
+  min-width: 180px;
+  white-space: nowrap;
+
+  /* Add this to center on mobile */
+  margin-left: auto;
+  margin-right: auto;
+}
