@@ -68,18 +68,17 @@
 
 /* === Projects Section Title ===
    - Large bold font, centered, with letter spacing for refinement */
-   .projects-title {
-    font-size: 3rem;
-    font-weight: 900;
-    margin-bottom: 3.5rem;
-    background: linear-gradient(90deg, #00b48c, #0c9cf1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    letter-spacing: -0.5px;
-    transition: color 0.3s ease;
-  }
-  
+.projects-title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 3.5rem;
+  background: linear-gradient(90deg, #00b48c, #0c9cf1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
 
 /* === Dark mode style for project title with subtle shadow and background === */
 .dark .projects-title {
@@ -111,6 +110,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
 }
 
+/* === Hover effect for project row === */
 .project-row:hover {
   transform: translateY(-3px) scale(1.01);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
@@ -373,7 +373,6 @@
   cursor: pointer;
 }
 
-
 /* === Icons color for projects === */
 .icon-green {
   margin-right: 10px;
@@ -393,7 +392,7 @@
 /* === Responsive adjustments for smaller screens === */
 @media (max-width: 768px) {
   .project-row {
-    flex-direction: column;
+    flex-direction: column !important; /* force column on all, including reverse */
     text-align: center;
   }
 
@@ -413,5 +412,75 @@
 
   .project-image img {
     max-height: 240px;
+  }
+}
+
+/* === Further responsive tweaks for very small screens === */
+@media (max-width: 400px) {
+  .project-showcase {
+    padding: 3rem 1rem;
+  }
+
+  .project-row {
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .project-details {
+    max-width: 100%;
+  }
+
+  .project-image {
+    max-width: 100%;
+  }
+}
+/* === Responsive adjustments === */
+@media (max-width: 768px) {
+  .project-row {
+    flex-direction: column !important;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  .project-image,
+  .project-details {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .project-details h3 {
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .project-links {
+    justify-content: center;
+  }
+
+  .project-links a {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .projects-title {
+    font-size: 2.2rem;
+    white-space: normal;
+  }
+
+  .project-image img {
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 400px) {
+  .project-showcase {
+    padding: 3rem 1rem;
+  }
+
+  .project-row {
+    gap: 1.5rem;
+    padding: 2rem 1rem;
   }
 }

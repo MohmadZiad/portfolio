@@ -101,6 +101,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 0; /* reset any margin */
 }
 
 .greeting {
@@ -139,9 +140,9 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1rem;
-  width: max-content;      /* عرض حسب المحتوى */
-  min-width: 180px;        /* عرض أدنى */
-  white-space: nowrap;     /* لمنع التفاف النص داخل الزر */
+  width: max-content; /* Width fits content */
+  min-width: 180px; /* Minimum width */
+  white-space: nowrap; /* No wrap inside button */
 }
 
 .cta:hover {
@@ -199,6 +200,8 @@ body {
 /* ====== Image Wrapper ====== */
 .hero-img-wrapper {
   flex: 1 1 460px;
+  max-width: 460px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -272,10 +275,13 @@ body {
 
   .hero-text {
     max-width: 100%;
+    margin-bottom: 1.5rem; /* Add margin below text on mobile */
   }
 
   .hero-img-wrapper {
     max-width: 100%;
+    width: 100%;
+    margin-top: 1rem; /* Space between text and image */
   }
 
   .title {
@@ -388,4 +394,24 @@ body.dark-mode .skills-marquee span {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+/* ====== Responsive Header ====== */
+@media (max-width: 768px) {
+  .hero-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .hero-header nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
 }

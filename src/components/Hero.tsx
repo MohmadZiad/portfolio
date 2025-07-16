@@ -10,7 +10,6 @@ import Particles from "react-tsparticles";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Hero.css";
-
 // ====== Sounds ======
 const clickSound = new Howl({ src: ["/click.mp3"] });
 

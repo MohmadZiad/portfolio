@@ -259,3 +259,56 @@ body.dark-mode .usecase-button:hover {
 body.dark-mode .tag-badge {
   background: linear-gradient(to right, #06b6d4, #67e8f9);
 }
+
+@media (max-width: 768px) {
+  .services-section {
+    padding: 4rem 1rem;
+  }
+
+  .services-title {
+    font-size: 2rem;
+    line-height: 1.4;
+  }
+
+  .filter-tabs {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .service-card {
+    padding: 1.8rem 1.2rem;
+    text-align: center;
+  }
+
+  .service-heading {
+    font-size: 1.3rem;
+  }
+
+  .service-bullets {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .usecase-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .tag-badge {
+    top: 0.6rem;
+    right: 0.6rem;
+    font-size: 0.6rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .service-icon-container {
+    margin: 0 auto 1rem auto;
+  }
+}

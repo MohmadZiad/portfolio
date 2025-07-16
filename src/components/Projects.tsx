@@ -67,7 +67,6 @@ const Projects: React.FC<ProjectsProps> = ({ darkMode }) => {
       id="projects"
       className={`project-showcase ${darkMode ? "dark" : ""}`}
     >
-      {/* Inner wrapper to control max-width and allow full bg coverage */}
       <div className="inner-wrapper">
         <h2 className="projects-title">
           <FaShoppingCart style={{ color: "#0fa68b" }} /> My Featured Projects &
